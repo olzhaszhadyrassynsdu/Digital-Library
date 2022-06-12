@@ -1,0 +1,76 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Complete Responsive Online Boot Store Website Design Tutorial
+  link(rel='stylesheet' href='https://unpkg.com/swiper@7/swiper-bundle.min.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
+  link(rel='stylesheet' href='/stylesheets/main.css')
+  script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
+  // custom js file link
+  script(src='/js/script.js')
+header.header
+  .header-1
+    a.logo(href='#')
+      i.fas.fa-book
+      |  THE HAPPY LIFE
+    form.search-form(action='')
+      input#search-box(type='search' name='' placeholder='search here...')
+      label.fas.fa-search(for='search-box')
+    .icons
+      #search-btn.fas.fa-search
+      if !authorized
+        //- #login-btn.fas.fa-user
+      else
+        //- a(href='/users/logout').fas.fa-sign-in-alt
+
+  .header-2
+    nav.navbar
+      a(href='/#home') home
+      a(href='/#featured') journals
+      a(href='/#arrivals') future
+      a(href='/#blogs') blogs
+nav.bottom-navbar
+  a.fas.fa-home(href='#home')
+  a.fas.fa-list(href='#featured')
+  a.fas.fa-tags(href='#arrivals')
+  a.fas.fa-comments(href='#reviews')
+  a.fas.fa-blog(href='#blogs')
+
+block content
+  .wrapper
+    h1.book-title #{book.title}
+
+    .book-details
+      p #[strong Author:]
+        a(href="#") #{book.author.name}
+      p #[strong Summary:] #{book.summary}
+      p #[strong ISBN:] #{book.isbn}
+      p #[strong Genre:]
+        each val, index in book.genre
+          a(href="#") #{val.name}
+          if index < book.genre.length - 1
+            |,
+
+      div(style='margin-top:20px')
+        h3 Book Status
+
+        each val in book_instances
+          div ID: #{val.id}
+          div.book-instances
+            if val.status=='Available'
+              p.text-success #{val.status}
+            else if val.status=='Maintenance'
+              p.text-danger #{val.status}
+            else
+              p.text-warning #{val.status}
+
+            if val.status!='Available'
+              p #[strong Loaned by:] #{val.user.fullname}
+              p #[strong Due back:] #{val.due_back}
+              p #[strong In queue:] #{queue_list.length}
+              p #[strong Send the book to the next person in queue:]
+              p Full Name: #{queue_list[0].fullname}
+              p Email: #{queue_list[0].email}
+              a(href='/catalog/book/send-next/' + book.id).btn Send the book

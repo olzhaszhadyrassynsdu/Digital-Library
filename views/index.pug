@@ -1,0 +1,168 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Complete Responsive Online Boot Store Website Design Tutorial
+  link(rel='stylesheet' href='https://unpkg.com/swiper@7/swiper-bundle.min.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
+  link(rel='stylesheet' href='/stylesheets/main.css')
+  script(src='https://unpkg.com/swiper@7/swiper-bundle.min.js')
+  // custom js file link
+  script(src='/js/script.js')
+header.header
+  .header-1
+    a.logo(href='#')
+      i.fas.fa-book
+      |  THE HAPPY LIFE
+    form.search-form(action='')
+     input#search-box(type='search' name='' placeholder='search here...')
+     label.fas.fa-search(for='search-box')
+    .icons
+      #search-btn.fas.fa-search
+      if !authorized
+        #login-btn.fas.fa-user
+      else
+        h4 #{user.fullname}
+        a(href='/users/logout').fas.fa-sign-in-alt
+
+  .header-2
+    nav.navbar
+      a(href='#home') home
+      a(href='#book list') book list
+      a(href='#contacts') contacts
+nav.bottom-navbar
+  a.fas.fa-home(href='#home')
+  a.fas.fa-list(href='#featured')
+  a.fas.fa-tags(href='#arrivals')
+  a.fas.fa-comments(href='#reviews')
+  a.fas.fa-blog(href='#blogs')
+if showLogin === true
+  .login-form-container.active
+    #close-login-btn.fas.fa-times
+    form(method='POST' action='/users/login')
+      h3 sign in
+      span Username:
+      input#username.box(type='text' placeholder='enter your username' name='username' required value=(undefined===user ? '' : user.username))
+      span Password:
+      input#password.box(placeholder='enter your password' type='password' name='password' required)
+      button.btn.btn-primary(type='submit') Submit
+
+      br
+      a(href='/users/register') Register
+      br
+      a(href='/users/reset') Forgot password?
+      br
+      if errors
+        ul.errors
+          for error in errors
+            li!= error.msg
+else
+  .login-form-container
+    #close-login-btn.fas.fa-times
+    form(method='POST' action='/users/login')
+      h3 sign in
+      span Username:
+      input#username.box(type='text' placeholder='enter your username' name='username' required value=(undefined===user ? '' : user.username))
+      span Password:
+      input#password.box(placeholder='enter your password' type='password' name='password' required)
+      button.btn.btn-primary(type='submit') Submit
+
+      br
+      a(href='/users/register') Register
+      br
+      a(href='/users/reset') Forgot password?
+      br
+      if errors
+        ul.errors
+          for error in errors
+            li!= error.msg
+section#home.home
+  .row
+    if authorized === false
+      .content
+        h3 Welcome
+        p You Should Log In For View And Subscribe To The Magazine
+        a.btn(href='#') Log in
+      .swiper.books-slider
+        .swiper-wrapper
+          a.swiper-slide(href='#')
+            img(src='https://m.media-amazon.com/images/I/419-fRmZxDL.jpg' alt='')
+          a.swiper-slide(href='#')
+            img(src='https://kbimages1-a.akamaihd.net/91ba9809-02d7-4767-b395-4015548c5b99/353/569/90/False/apes-and-angels.jpg' alt='')
+          a.swiper-slide(href='#')
+            img(src='https://images-na.ssl-images-amazon.com/images/I/51Xh7hmeXPL._SX325_BO1,204,203,200_.jpg' alt='')
+          a.swiper-slide(href='#')
+            img(src='https://images-eu.ssl-images-amazon.com/images/I/51-TOtX11mL._SY264_BO1,204,203,200_QL40_FMwebp_.jpg' alt='')
+          a.swiper-slide(href='#')
+            img(src='https://images-na.ssl-images-amazon.com/images/I/51-ckcKhlAL._SX308_BO1,204,203,200_.jpg' alt='')
+    else
+      .content
+        h3 Logged in
+        p You have options to subscribe to various magazines that you have to read within 3 days
+        //- a.btn(href='#') See Now
+        //- a.btn2(href='#') Get a subscription
+      .books-slider
+        if book_instances
+          h2 You already subscribed to:
+          br
+          each instance in book_instances
+            //- img(src='https://api.time.com/wp-content/uploads/2020/11/T100card.png?w=564&h=1028&crop=1' alt='')
+            .content
+              a(href=instance.book.url)
+                h3 #{instance.book.title}
+          
+section#featured.featured
+  h1.heading
+    span Book list
+  .swiper.featured-slider
+    .swiper-wrapper
+      if book_list
+        each book in book_list
+          .swiper-slide.box
+            if book.image
+              .image
+                img(src=book.image alt='')
+            else
+              .image
+                img(src='https://api.time.com/wp-content/uploads/2020/11/T100card.png?w=564&h=1028&crop=1' alt='')
+            .content
+              h3 #{book.title} #{book.img}
+              h4 #{book.author.name}
+              h4 Book Status:
+              each val in book.instances
+                div.book-instances
+                  if val.status=='Available'
+                    p.text-success #{val.status}
+                  else if val.status=='Maintenance'
+                    p.text-danger #{val.status}
+                  else
+                    p.text-warning #{val.status}
+              else
+                p There are no copies of this book in the library.
+              a.btn(href=book.url) read
+      else
+        li There are no books.
+    .swiper-button-next
+    .swiper-button-prev
+
+  
+section.footer
+  .box-container
+    .box
+      h3 contact info
+      a(href='#')
+        i.fas.fa-phone
+        |  +123-456-7890
+      a(href='#')
+        i.fas.fa-phone
+        |  +111-222-3333
+      a(href='#')
+        i.fas.fa-envelope
+        |  thehappylife@gmail.com
+  .share
+    a.fab.fa-facebook-f(href='#')
+    a.fab.fa-twitter(href='#')
+    a.fab.fa-instagram(href='#')
+    a.fab.fa-linkedin(href='#')
+    a.fab.fa-pinterest(href='#')

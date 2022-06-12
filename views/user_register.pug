@@ -1,0 +1,42 @@
+doctype html
+head
+  meta(charset='utf-8')
+  title Animated Login Form | CodingNepal
+  link(rel='stylesheet' href='/stylesheets/style_registration.css')
+.title
+  h1 THE HAPPY LIFE
+.center
+  h1 Registration
+  form(method='POST' action='')
+    div.txt_field
+      input#username.form-control(type='text' placeholder='' name='username' required value=(undefined===user ? '' : user.username))
+      span
+      label(for='username') Username:*
+    div.txt_field
+      input#fullname.form-control(type='text' placeholder='' name='fullname' required value=(undefined===user ? '' : user.fullname))
+      span
+      label(for='fullname') Full Name:*
+    div.txt_field
+      input#email.form-control(type='email' placeholder='' name='email' required value=(undefined===user ? '' : user.email))
+      span
+      label(for='email') E-mail:*
+    if is_update_form
+      hr
+      p Use the fields below if you want to change your password, too. Otherwise, leave blank.
+      hr
+
+    div.txt_field
+      input#password.form-control(type='password' name='password' required=!is_update_form)
+      span
+      label(for='password') #{is_update_form ? 'New Password:' : 'Password:*'}
+    div.txt_field
+      input#password_confirm.form-control(type='password' name='password_confirm' required=!is_update_form)
+      span
+      label(for='password_confirm') #{is_update_form ? 'Confirm New Password:' : 'Confirm Password:*'}
+    input(type='submit' value='Create account')
+    .signup_link
+    if errors
+      ul
+        for error in errors
+          li!= error.msg
+    br

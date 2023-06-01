@@ -1,4 +1,4 @@
-"Happy Life" is a local company. Company provides free library for its employees. Library operates in as a subscription service. 
+"Happy Life" is a local company. Company provides free library for its employees. Library operates as a subscription service. 
 
   
   

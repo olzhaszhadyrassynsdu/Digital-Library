@@ -8,3 +8,4 @@ Subscription works in this way:
   
 
 
+<img width="1423" alt="Снимок экрана 2023-06-01 в 23 21 21" src="https://github.com/olzhaszhadyrassynsdu/Digital-Library/assets/44583362/3dfd3eff-6fb5-4339-a87e-d0d67d6cdade">
